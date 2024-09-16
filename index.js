@@ -6,7 +6,7 @@ async function openWebPage() {
         slowMo: 2000
     });
     const page = await browser.newPage();
-    await page.goto('https://workingprime.com');
+    await page.goto('https://quotes.toscrape.com');
     await browser.close();
 }
 
@@ -16,7 +16,7 @@ async function captureScreenShot() {
         slowMo: 2000
     });
     const page = await browser.newPage();
-    await page.goto('https://workingprime.com');
+    await page.goto('https://quotes.toscrape.com');
     await page.screenshot({path: 'captura.png'});
     await browser.close();
 }
@@ -34,6 +34,24 @@ async function navigateWebPage() {
     await browser.close();
 }
 
+async function getDataFromWebPage() {
+    const browser = await puppeteer.launch({
+        headless: false,
+        slowMo: 200
+    });
+    const page = await browser.newPage();
+    await page.goto('https://quotes.toscrape.com');
+    const result = await page.evaluate(() => {
+        const title = document.querySelector('h1 a').textContent;
+        const description = document.querySelector('.quote span').textContent;
+        const author = document.querySelector('.quote span .author').textContent; 
+        return {title, description, author}
+    })
+    console.table(result);
+    await browser.close();
+}
+
 // openWebPage()
-// captur eScreenShot();
-navigateWebPage();
+// captureScreenShot();
+// navigateWebPage();
+getDataFromWebPage();
