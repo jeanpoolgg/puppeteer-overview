@@ -10,4 +10,15 @@ async function openWebPage() {
     await browser.close();
 }
 
-openWebPage();
+async function captureScreenShot() {
+    const browser = await puppeteer.launch({
+        headless: false,
+        slowMo: 2000
+    });
+    const page = await browser.newPage();
+    await page.goto('https://workingprime.com');
+    await page.screenshot({path: 'captura.png'});
+    await browser.close();
+}
+
+captureScreenShot();
