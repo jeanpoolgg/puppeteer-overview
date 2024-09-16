@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+import fs from "fs/promises";
 
 async function openWebPage() {
     const browser = await puppeteer.launch({
@@ -73,6 +74,7 @@ async function handleDynamicWebPage() {
         return data;
     })
     console.table(result);
+    fs.writeFile('quotes.json', JSON.stringify(result, null, 2));
     await browser.close();
 }
 
