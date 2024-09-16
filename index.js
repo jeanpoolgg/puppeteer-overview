@@ -21,4 +21,19 @@ async function captureScreenShot() {
     await browser.close();
 }
 
-captureScreenShot();
+async function navigateWebPage() {
+    const browser = await puppeteer.launch({
+        headless: false,
+        slowMo: 200
+    });
+    const page = await browser.newPage();
+    await page.goto('https://quotes.toscrape.com');
+    await page.click('a[href="/login"]');
+    await new Promise(r => setTimeout(r, 3000));
+    await page.screenshot({path: 'login.png'});
+    await browser.close();
+}
+
+// openWebPage()
+// captur eScreenShot();
+navigateWebPage();
